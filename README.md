@@ -1,4 +1,4 @@
-# shutterstock.clj
+# Shutterstock
 Scrape the shutterstock.com website for images matching a query.  I uses it for
 quickly populating the image field in Anki (a space repetition program). I typically run it from Alfred (an application launcher for macOS). The Alfred script runs a precompiled script to shave off a few seconds of running time. *see Usage (Command line using Java)*. 
 
