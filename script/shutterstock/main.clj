@@ -23,7 +23,6 @@
                 people? ethnicity? gender? age?
                 ))))
 
-
 (defn spit-result [result]
   (.setContents
    (.getSystemClipboard
@@ -98,11 +97,12 @@
   ;[{:as args}]
   (let [error-message "Usage: query <string> age <string> gender <string> people <boolean> ethnicity <string>d"
         bad-query "No image matching query was found"
-        spit-it-out #(if (nil? %) (spit-result bad-query) (spit-result %))
+        result? #(if (nil? %) bad-query %)
         args'  (format-args (keywordize-keys args))
         rand-img #(nth % (rand-int 10))
         cell (get args' :cell)
-        get-img #(if cell (nth % cell) (rand-img %))]
+        get-img #(if cell (nth % cell) (rand-img %))
+        ]
     (if (valid-search-terms? args')
       (->> (sample-html args')
           (hc/parse)
@@ -112,8 +112,9 @@
           (hs/select (hs/tag :img))
           get-img
           :attrs :src
-          spit-it-out)
-      (spit-result error-message))))
+          result?
+          print)
+      (print error-message))))
 
 (comment
   (let [
@@ -124,7 +125,7 @@
         cell (get args' :cell)
         rand-img #(nth % (rand-int (count %)) (first %))
         get-img #(if cell (nth % cell) (rand-img %))
-        spit-it-out #(if (= "" %) (spit-result bad-query) (spit-result %))
+        spit-it-out #(if (= "" %) bad-query %)
         ]
       (->> (sample-html args')
            (hc/parse)
