@@ -24,6 +24,10 @@ There is a `scrape.sh` shell script to make this easier:
 
 `$ ./scrape.sh query girls+horses age teenagers`
 
+### Using the Babashka script
+The Babashka script is located in `scripts/shutterstock/main`
+`$ bb -m shutterstock.main query girls+horses`
+
 ## Usage (Command line using Clojure)
 Arguments are key value pairs using a map data structure. For this to work, be sure to update `main.clj` by commenting line 96 and uncommenting line 98
 
@@ -43,9 +47,12 @@ Arguments are key value pairs using a map data structure. For this to work, be s
 |           |         |          | image you want                     |
 
 
-## Alfred Script
+## Textexpander Script
+Copy the query arguments into your clipboard.  Then run the following script from Textexpander:
+This Babashka script is not as robust at checking for valid arguments.
 ```
-args="$@"
-cd path/to/shutterstock/directory
+#!/bin/bash
+args=$(pbpaste)
+cd path/to/shutterstock
 /usr/bin/java -cp $(/usr/local/bin/clojure -Spath):classes shutterstock.main $args
 ```
