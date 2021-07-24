@@ -1,6 +1,5 @@
 # Shutterstock
-Scrape the shutterstock.com website for images matching a query.  I uses it for
-quickly populating the image field in Anki (a space repetition program). I typically run it from Alfred (an application launcher for macOS). The Alfred script runs a precompiled script to shave off a few seconds of running time. *see Usage (Command line using Java)*. 
+A clojure program for scraping the shutterstock.com website for images matching a query.  I use it for quickly populating the an image field in Anki (a space repetition program). I typically run it from [Textexpander](https://textexpander.com/). 
 
 ## Usage (Command line using Clojure)
 Arguments are key value pairs using a map data structure. For this to work, be sure to update `main.clj` by commenting line 96 and uncommenting line 98
@@ -25,11 +24,13 @@ The Babashka script is located in `scripts/shutterstock/main`. Notice that queri
 |            |         |          | image you want                     |
 
 
-## Textexpander Script
-Copy the query arguments into your clipboard.  Then run the following script from Textexpander:
+## Usage (Textexpander script)
+Create the following shell script snippit in Textexpander:
 ```
 #!/bin/bash
 args=$(pbpaste)
 cd path/to/shutterstock
-/usr/bin/java -cp $(/usr/local/bin/clojure -Spath):classes shutterstock.main $args
+/usr/local/bin/bb -m shutterstock.main $args
 ```
+
+copy the query arguements into your clipboard and run the shell script snippit.
