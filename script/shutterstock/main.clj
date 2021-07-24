@@ -38,7 +38,8 @@
 
 (defn -main
   "Parse the Shutter Stock Page to retrieve the first image url that matches the
-  search input criteria, and copy it to the clipboard"
+  search input criteria, and copy it to the clipboard Queries are NOT hash maps:
+  $ bb -m shutterstock.main query horses+girls"
   [& args]
   (let [bad-query "No image matching query was found"
         args' (format-args (keywordize-keys (apply hash-map args)))

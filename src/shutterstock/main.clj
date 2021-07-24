@@ -2,7 +2,6 @@
   (:gen-class)
   (:require [hickory.core :as hc]
             [hickory.select :as hs]
-            [clojure.walk :refer [keywordize-keys]]
             [clojure.spec.alpha :as spec]
             [clojure.string :refer [lower-case]]))
 
@@ -22,14 +21,6 @@
                 query "?image_type=" image-type "&orientation=" orientation
                 people? ethnicity? gender? age?
                 ))))
-
-(defn spit-result [result]
-  (.setContents
-   (.getSystemClipboard
-    (java.awt.Toolkit/getDefaultToolkit))
-   (java.awt.datatransfer.StringSelection. result)
-   nil))
-
 
 ;; alpha-numeric characters only, exclude spaces.
 (def query-regex #"^[a-zA-Z0-9+]*$")
@@ -90,15 +81,13 @@
 
 (defn -main
   "Parse the Shutter Stock Page to retrieve the first image url that matches the
-  search input criteria, and copy it to the clipboard"
-  ; Use this when using java (i.e., $ java -cp $(clojure -Spath):classes query horses+girls)
-  [& {:as args}]
-  ; Use this when using clojure (i.e, $ clj -X:run :query horses+girls)
-  ;[{:as args}]
-  (let [error-message "Usage: query <string> age <string> gender <string> people <boolean> ethnicity <string>d"
+  search input criteria, and copy it to the clipboard. Queries are hashmaps:
+  $ clj -X:run :query horses+girls age: teenagers"
+  [{:as args}]
+  (let [error-message "Usage: :query <string> :age <string> :gender <string> :people <boolean> :ethnicity <string>d"
         bad-query "No image matching query was found"
         result? #(if (nil? %) bad-query %)
-        args'  (format-args (keywordize-keys args))
+        args'  (format-args args)
         rand-img #(nth % (rand-int 10))
         cell (get args' :cell)
         get-img #(if cell (nth % cell) (rand-img %))
@@ -113,5 +102,5 @@
           get-img
           :attrs :src
           result?
-          print)
-      (print error-message))))
+          println)
+      (println error-message))))
