@@ -2,5 +2,6 @@
  ["script"]
 
  :deps
-   {hickory/hickory  {:mvn/version "0.7.1"}}
+ {org.clojure/clojure {:mvn/version "1.10.3"}
+  hickory/hickory  {:mvn/version "0.7.1"}}
 }

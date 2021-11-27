@@ -104,3 +104,13 @@
           result?
           println)
       (println error-message))))
+
+
+(comment
+  (->> (sample-html {:query "girls+horses"})
+       (hc/parse)
+       (hc/as-hickory)
+       (hs/select (hs/class "z_g_d65b1"))
+       (first)
+       (hs/select (hs/tag :img)))
+  ,)

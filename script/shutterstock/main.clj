@@ -49,7 +49,7 @@
         get-img #(if cell (nth % cell) (rand-img %))
         ]
       (->> (utils/convert-to (sample-html args') :hickory)
-          (hs/select (hs/class "z_g_d65b1"))
+           (hs/select (hs/class "z_g_d65b1"))
           first
           (hs/select (hs/tag :img))
           get-img
